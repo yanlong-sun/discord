@@ -61,6 +61,4 @@ client.once(Events.ClientReady, (readyClient) => {
   console.log(`Ready! Logged in as ${readyClient.user.tag}`);
 });
 
-const args = process.argv.slice(2);
-console.log("token is", args[0]);
-client.login(args[0]);
+client.login(process.env.DISCORD_TOKEN);
