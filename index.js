@@ -1,12 +1,7 @@
 require("dotenv").config();
-
-const { Client, GatewayIntentBits } = require("discord.js");
+const { Client, Intents } = require("discord.js");
 const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-  ],
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 
 client.on("ready", () => {
@@ -14,14 +9,13 @@ client.on("ready", () => {
 });
 
 client.on("messageCreate", (message) => {
-  // 确保消息不是来自Bot自身
   if (message.author.bot) return;
 
-  // 你的其他消息处理逻辑
   if (message.content === "!ping") {
     message.reply("Pong!");
   }
 });
+
 const args = process.argv.slice(2);
 console.log("token is", args[0]);
 client.login(args[0]);
