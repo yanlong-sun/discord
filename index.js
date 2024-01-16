@@ -9,7 +9,7 @@ client.on("ready", () => {
 
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
-
+  console.log(interaction);
   if (interaction.commandName === "ping") {
     await interaction.reply("Pong!");
   }
