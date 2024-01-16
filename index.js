@@ -7,11 +7,11 @@ client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on("interactionCreate", async (interaction) => {
-  if (!interaction.isChatInputCommand()) return;
-  console.log(interaction);
-  if (interaction.commandName === "ping") {
-    await interaction.reply("Pong!");
+client.on("message", async (message) => {
+  console.log(message);
+  console.log(message.content);
+  if (message.content === "ping") {
+    message.reply("Pong!");
   }
 });
 
