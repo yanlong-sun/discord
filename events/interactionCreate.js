@@ -1,10 +1,10 @@
-const { Events, Collection } = require("discord.js");
+const { Events } = require("discord.js");
 
 module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction) {
     if (!interaction.isChatInputCommand()) return;
-
+    const command = interaction.client.commands.get(interaction.commandName);
     // if (interaction.customId === "logModal") {
     //   const user = interaction.user.userName;
     //   const date = interaction.fields.getTextInputValue("dateInput");
