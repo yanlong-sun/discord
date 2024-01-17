@@ -7,8 +7,6 @@ const {
   ActionRowBuilder,
 } = require("discord.js");
 
-const today = new Date().toJSON().split("T")[0];
-
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("log")
@@ -23,8 +21,8 @@ module.exports = {
       .setCustomId("dateInput")
       .setLabel("Date")
       .setPlaceholder("Enter the date")
-      .setValue(today)
-      .setStyle(TextInputStyle.date)
+      .setValue("x")
+      .setStyle(TextInputStyle.Paragraph)
       .setRequired(true);
 
     const log = new TextInputBuilder()
