@@ -23,7 +23,7 @@ module.exports = {
       .setLabel("Date")
       .setPlaceholder("Enter the date")
       .setValue(today)
-      .setStyle(TextInputStyle.Date)
+      .setStyle(TextInputStyle.Short)
       .setRequired(true);
 
     const log = new TextInputBuilder()
@@ -31,7 +31,6 @@ module.exports = {
       .setLabel("Task Details")
       .setPlaceholder("Enter the task")
       .setStyle(TextInputStyle.Paragraph)
-      .setMinLength(10)
       .setMaxLength(1_000)
       .setRequired(true);
 
