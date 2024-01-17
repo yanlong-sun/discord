@@ -5,7 +5,8 @@ module.exports = {
   async execute(interaction) {
     // 监听提交动作
     if (interaction.isModalSubmit() && interaction.customId === "logModal") {
-      const user = interaction.user.username;
+      const user =
+        interaction.user.username === "yanlong_sun" ? "Yanlong" : "Jamie";
       const date = interaction.fields.getTextInputValue("dateInput");
       const log = interaction.fields.getTextInputValue("logInput");
       if (!Number.isNaN(new Date(date).valueOf())) {
@@ -18,7 +19,7 @@ module.exports = {
       // upload to google sheet
 
       await interaction.reply({
-        content: `${user}'s submission was received SUCCESSFULLY! \n \n DATE: \n ${date} \n \n TASK: \n${log}`,
+        content: `${user} submitted: \n \n ${date} \n ${log}`,
       });
     }
     // 监听 slash command
