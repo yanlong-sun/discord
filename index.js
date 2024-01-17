@@ -1,9 +1,10 @@
 require("dotenv").config();
 const fs = require("node:fs");
 const path = require("node:path");
-
+const logger = require("./util/logger.js");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 
+logger.info("start");
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -22,7 +23,7 @@ for (const folder of commandFolders) {
     if ("data" in command && "execute" in command) {
       client.commands.set(command.data.name, command);
     } else {
-      console.log(
+      logger.warning(
         `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
       );
     }
