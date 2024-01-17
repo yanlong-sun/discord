@@ -27,6 +27,8 @@ for (const folder of commandFolders) {
 }
 
 // Construct and prepare an instance of the REST module
+console.log(process.env.CLIENTID);
+console.log(process.env.DISCORD_TOKEN);
 const rest = new REST().setToken(process.env.DISCORD_TOKEN);
 
 // and deploy your commands!
