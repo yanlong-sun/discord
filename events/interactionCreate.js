@@ -5,11 +5,11 @@ module.exports = {
   async execute(interaction) {
     // 监听提交动作
     if (interaction.isModalSubmit() && interaction.customId === "logModal") {
-      const user = interaction.user.userName;
+      const user = interaction.user.username;
       const date = interaction.fields.getTextInputValue("dateInput");
       const log = interaction.fields.getTextInputValue("logInput");
       await interaction.reply({
-        content: `${user}'s submission was received successfully: \n ${date} \n ${log}`,
+        content: `${user}'s submission was received successfully! \n \n DATE: ${date} \n \n TASK: \n${log}`,
       });
       return;
     }
