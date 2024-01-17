@@ -5,45 +5,46 @@ module.exports = {
   async execute(interaction) {
     if (!interaction.isChatInputCommand() || !interaction.isModalSubmit())
       return;
-    if (interaction.customId === "logModal") {
-      const user = interaction.user.userName;
-      const date = interaction.fields.getTextInputValue("dateInput");
-      const log = interaction.fields.getTextInputValue("logInput");
-      await interaction.reply({
-        content: `${user}'s submission was received successfully: \n ${date} \n ${log}`,
-      });
-      return;
-    }
-    const command = interaction.client.commands.get(interaction.commandName);
-    if (!command) {
-      console.error(
-        `No command matching ${interaction.commandName} was found.`
-      );
-      return;
-    }
     // add cooldown
-    const { cooldowns } = interaction.client;
-    if (!cooldowns.has(command.data.name)) {
-      cooldowns.set(command.data.name, new Collection());
-    }
-    const now = Date.now();
-    const timestamps = cooldowns.get(command.data.time);
-    const defaultCooldownDuration = 3;
-    const cooldownAmount =
-      (command.cooldown ?? defaultCooldownDuration) * 1_000;
-    if (timestamps.has(interaction.user.id)) {
-      const expirationTime =
-        timestamps.get(interaction.user.id) + cooldownAmount;
-      if (now < expirationTime) {
-        const expiredTimestamp = Math.round(expirationTime / 1000);
-        return interaction.reply({
-          content: `Please wait, you are on a cooldown for \`${command.data.name}\`. You can use it again <t:${expiredTimestamp}:R.>`,
-          ephemeral: true,
-        });
-      }
-    }
-    timestamps.set(interaction.user.id, now);
-    setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
+    // const { cooldowns } = interaction.client;
+    // if (!cooldowns.has(command.data.name)) {
+    //   cooldowns.set(command.data.name, new Collection());
+    // }
+    // const now = Date.now();
+    // const timestamps = cooldowns.get(command.data.time);
+    // const defaultCooldownDuration = 3;
+    // const cooldownAmount =
+    //   (command.cooldown ?? defaultCooldownDuration) * 1_000;
+    // if (timestamps.has(interaction.user.id)) {
+    //   const expirationTime =
+    //     timestamps.get(interaction.user.id) + cooldownAmount;
+    //   if (now < expirationTime) {
+    //     const expiredTimestamp = Math.round(expirationTime / 1000);
+    //     return interaction.reply({
+    //       content: `Please wait, you are on a cooldown for \`${command.data.name}\`. You can use it again <t:${expiredTimestamp}:R.>`,
+    //       ephemeral: true,
+    //     });
+    //   }
+    // }
+    // timestamps.set(interaction.user.id, now);
+    // setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
+
+    // if (interaction.customId === "logModal") {
+    //   const user = interaction.user.userName;
+    //   const date = interaction.fields.getTextInputValue("dateInput");
+    //   const log = interaction.fields.getTextInputValue("logInput");
+    //   await interaction.reply({
+    //     content: `${user}'s submission was received successfully: \n ${date} \n ${log}`,
+    //   });
+    //   return;
+    // }
+    // const command = interaction.client.commands.get(interaction.commandName);
+    // if (!command) {
+    //   console.error(
+    //     `No command matching ${interaction.commandName} was found.`
+    //   );
+    //   return;
+    // }
 
     try {
       await command.execute(interaction);

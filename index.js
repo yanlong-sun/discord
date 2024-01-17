@@ -9,7 +9,6 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 // commands
 client.commands = new Collection();
-client.cooldowns = new Collection();
 const commandFoldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(commandFoldersPath);
 for (const folder of commandFolders) {
