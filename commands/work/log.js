@@ -43,19 +43,3 @@ module.exports = {
     await interaction.showModal(modal);
   },
 };
-
-client.on(Events.InteractionCreate, async (interaction) => {
-  if (!interaction.isModalSubmit()) return;
-  if (interaction.customId === "logModal") {
-    const user = interaction.user.username;
-
-    // Retrieve submitted values from the interaction
-    const date = interaction.fields.getTextInputValue("dateInput");
-    const log = interaction.fields.getTextInputValue("logInput");
-
-    // Reply to the user with the submitted values
-    await interaction.reply({
-      content: `${user}'s submission was received successfully:\nDate: ${date}\nTask Details: ${log}`,
-    });
-  }
-});
