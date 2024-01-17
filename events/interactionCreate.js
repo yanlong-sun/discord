@@ -3,7 +3,17 @@ const { Events, Collection } = require("discord.js");
 module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction) {
-    if (!interaction.isChatInputCommand()) return;
+    if (!interaction.isChatInputCommand() || !interaction.isModalSubmit())
+      return;
+    if (interaction.customId === "logModal") {
+      const user = interaction.user.userName;
+      const date = interaction.fields.getTextInputValue("dateInput");
+      const log = interaction.fields.getTextInputValue("logInput");
+      await interaction.reply({
+        content: `${user}'s submission was received successfully: \n ${date} \n ${log}`,
+      });
+      return;
+    }
     const command = interaction.client.commands.get(interaction.commandName);
     if (!command) {
       console.error(
