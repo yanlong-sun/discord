@@ -8,10 +8,18 @@ module.exports = {
       const user = interaction.user.username;
       const date = interaction.fields.getTextInputValue("dateInput");
       const log = interaction.fields.getTextInputValue("logInput");
+      if (!Number.isNaN(new Date(date).valueOf())) {
+        await interaction.reply({
+          content: `Submission was FAILED! \n ${date} is not a valid date`,
+        });
+        return;
+      }
+
+      // upload to google sheet
+
       await interaction.reply({
-        content: `${user}'s submission was received successfully! \n \n DATE: \n ${date} \n \n TASK: \n${log}`,
+        content: `${user}'s submission was received SUCCESSFULLY! \n \n DATE: \n ${date} \n \n TASK: \n${log}`,
       });
-      return;
     }
     // 监听 slash command
     if (!interaction.isChatInputCommand()) return;
