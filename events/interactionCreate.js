@@ -9,7 +9,7 @@ module.exports = {
       const date = interaction.fields.getTextInputValue("dateInput");
       const log = interaction.fields.getTextInputValue("logInput");
       await interaction.reply({
-        content: `${user}'s submission was received successfully! \n \n DATE: ${date} \n \n TASK: \n${log}`,
+        content: `${user}'s submission was received successfully! \n \n DATE: \n ${date} \n \n TASK: \n${log}`,
       });
       return;
     }
