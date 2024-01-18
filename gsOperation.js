@@ -12,36 +12,38 @@ const serviceAccountAuth = new JWT({
 });
 
 const doc = new GoogleSpreadsheet(RESPONSES_SHEET_ID, serviceAccountAuth);
-doc.axios = doc.axios || {};
-doc.axios.defaults = doc.axios.defaults || {};
+
 const getRow = async (date) => {
+  const startDate = new Date("2023-09-19");
+  const timeDiff = date.getTime() - startDate.getTime();
+  const index = timeDiff / (1000 * 60 * 60 * 24);
+
   await doc.loadInfo();
   let sheet = doc.sheetsByIndex[0];
   let rows = await sheet.getRows();
-
-  for (let index = 0; index < rows.length; index++) {
-    const row = rows[index];
-    if (row._rawData[0] === date) {
-      console.log("Found row: ", row._rawData);
-      row._rawData.forEach((cellValue, columnIndex) => {
-        console.log(`Cell ${columnIndex + 1}: ${cellValue}`);
-      });
+  if (rows[index + 1]._rawData[0] === date) {
+    const row = rows[index + 1]._rawData;
+    console.log("here is the row", row);
+    if (row.length < 3) {
+      console.log("<3 result: ", [...row, new Array(3 - row.length).fill("")]);
+      return [...row, new Array(3 - row.length).fill("")];
     }
+    console.log("==3 result: ", row);
+    return row;
   }
+  console.log("bucunzai result", -1);
+  return -1;
 };
 
-getRow("2024-01-17");
+getRow("2023-10-11");
+getRow("2023-10-15");
+getRow("2023-10-23");
+getRow("2033-10-15");
 
-// const addRow = async (rows) => {
-//   // use service account creds
-//   await doc.useServiceAccountAuth({
-//     client_email: CREDENTIALS.client_email,
-//     private_key: CREDENTIALS.private_key,
-//   });
+// const getTask = async (date) => {};
 
+// const addTask = async (date, id) => {
 //   await doc.loadInfo();
-
-//   // Index of the sheet
 //   let sheet = doc.sheetsByIndex[0];
 
 //   for (let index = 0; index < rows.length; index++) {
@@ -62,50 +64,3 @@ getRow("2024-01-17");
 //     password: "abcd@1234",
 //   },
 // ];
-
-// const updateRow = async (keyValue, oldValue, newValue) => {
-//   // use service account creds
-//   await doc.useServiceAccountAuth({
-//     client_email: CREDENTIALS.client_email,
-//     private_key: CREDENTIALS.private_key,
-//   });
-
-//   await doc.loadInfo();
-
-//   // Index of the sheet
-//   let sheet = doc.sheetsByIndex[0];
-
-//   let rows = await sheet.getRows();
-
-//   for (let index = 0; index < rows.length; index++) {
-//     const row = rows[index];
-//     if (row[keyValue] === oldValue) {
-//       rows[index][keyValue] = newValue;
-//       await rows[index].save();
-//       break;
-//     }
-//   }
-// };
-
-// const deleteRow = async (keyValue, thisValue) => {
-//   // use service account creds
-//   await doc.useServiceAccountAuth({
-//     client_email: CREDENTIALS.client_email,
-//     private_key: CREDENTIALS.private_key,
-//   });
-
-//   await doc.loadInfo();
-
-//   // Index of the sheet
-//   let sheet = doc.sheetsByIndex[0];
-
-//   let rows = await sheet.getRows();
-
-//   for (let index = 0; index < rows.length; index++) {
-//     const row = rows[index];
-//     if (row[keyValue] === thisValue) {
-//       await rows[index].delete();
-//       break;
-//     }
-//   }
-// };
