@@ -9,7 +9,7 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("tv")
-    .setDescription("生成小宝和爱一帆搜索结果"),
+    .setDescription("生成爱一帆和小宝影院搜索结果"),
   async execute(interaction) {
     const modal = new ModalBuilder()
       .setCustomId("tvModal")
@@ -17,8 +17,8 @@ module.exports = {
     const keyword = new TextInputBuilder()
       .setCustomId("keyword")
       .setLabel("KeyWord")
-      .setPlaceholder("莫蒂和瑞克")
-      .setValue("莫蒂和瑞克")
+      .setPlaceholder("莫蒂与瑞克")
+      .setValue("莫蒂与瑞克")
       .setStyle(TextInputStyle.Short)
       .setRequired(true);
     // action row only holds one text input
