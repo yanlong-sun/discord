@@ -1,9 +1,10 @@
 const { Events } = require("discord.js");
 const { getTask, addTask } = require("../util/gsOperation.js");
+const logger = require("../util/logger.js");
 
 const isValidDateFormat = (date) => {
   const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
-  console.log(`is Date ${date}, valid? ${dateFormatRegex.test(dateString)}`);
+  logger(`is Date ${date}, valid? ${dateFormatRegex.test(dateString)}`);
   return dateFormatRegex.test(dateString);
 };
 
