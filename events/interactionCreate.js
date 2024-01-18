@@ -4,7 +4,7 @@ const logger = require("../util/logger.js");
 
 const isValidDateFormat = (date) => {
   const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
-  logger(`is Date ${date}, valid? ${dateFormatRegex.test(dateString)}`);
+  logger(`is Date ${date}, valid? ${dateFormatRegex.test(date)}`);
   return dateFormatRegex.test(dateString);
 };
 
