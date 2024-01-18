@@ -17,8 +17,8 @@ doc.axios.defaults = doc.axios.defaults || {};
 const getRow = async (date) => {
   await doc.loadInfo();
   let sheet = doc.sheetsByIndex[0];
-  console.log("sheet.......", sheet);
   let rows = await sheet.getRows();
+  console.log("rows.......", rows);
 
   for (let index = 0; index < rows.length; index++) {
     const row = rows[index];
