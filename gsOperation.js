@@ -22,7 +22,7 @@ const getRow = async (date) => {
   await doc.loadInfo();
   let sheet = doc.sheetsByIndex[0];
   let rows = await sheet.getRows();
-  console.log(date, index, rows[index]);
+  console.log(date, index);
   if (index > 0 && rows[index] && rows[index]._rawData[0] === date) {
     const row = rows[index]._rawData;
     console.log("here is the row", row);
