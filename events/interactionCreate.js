@@ -35,6 +35,15 @@ module.exports = {
         content: `${user} submitted: \n \n ${date} \n ${log}`,
       });
     }
+    if (interaction.isModalSubmit() && interaction.customId === "tvModal") {
+      const keyword = interaction.fields.getTextInputValue("keyword");
+      const encodedKeyword = encodeURI(keyword);
+      await interaction.reply({
+        content: `xiaobao: https://xiaoxintv.net/index.php/vod/search.html?wd=${encodedKeyword}&submit=  \n
+                  aiyifan: https://www.iyf.tv/search/${encodedKeyword} \n`,
+      });
+      return;
+    }
     // 监听 slash command
     if (!interaction.isChatInputCommand()) return;
     const command = interaction.client.commands.get(interaction.commandName);
