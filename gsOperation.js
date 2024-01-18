@@ -18,12 +18,14 @@ const getRow = async (date) => {
   await doc.loadInfo();
   let sheet = doc.sheetsByIndex[0];
   let rows = await sheet.getRows();
-  console.log("rows.......", rows);
 
   for (let index = 0; index < rows.length; index++) {
     const row = rows[index];
-    if (row.Date == date) {
-      console.log(row);
+    if (row._rawData[0] === date) {
+      console.log("Found row: ", row._rawData);
+      row._rawData.forEach((cellValue, columnIndex) => {
+        console.log(`Cell ${columnIndex + 1}: ${cellValue}`);
+      });
     }
   }
 };
