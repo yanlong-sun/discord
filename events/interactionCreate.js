@@ -1,6 +1,11 @@
 const { Events } = require("discord.js");
 const { getTask, addTask } = require("../util/gsOperation.js");
 
+const isValidDateFormat = (date) => {
+  const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
+  return dateFormatRegex.test(dateString);
+};
+
 module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction) {
@@ -11,15 +16,20 @@ module.exports = {
       const id = interaction.user.username === "yanlong_sun" ? "2" : "1";
       const date = interaction.fields.getTextInputValue("dateInput");
       const log = interaction.fields.getTextInputValue("logInput");
-      if (!Number.isNaN(new Date(date).valueOf())) {
+      if (isValidDateFormat(date)) {
         await interaction.reply({
           content: `Submission was FAILED! \n ${date} is not a valid date`,
         });
         return;
       }
       // upload to google sheet
-      await addTask(data, 1, log);
-
+      try {
+        await addTask(data, id, log);
+      } catch (error) {
+        await interaction.reply({
+          content: `Submission was FAILED! ${error}`,
+        });
+      }
       await interaction.reply({
         content: `${user} submitted: \n \n ${date} \n ${log}`,
       });
