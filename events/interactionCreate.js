@@ -25,7 +25,7 @@ module.exports = {
         return;
       }
       try {
-        await addTask(data, id, log);
+        await addTask(date, id, log);
       } catch (error) {
         await interaction.reply({
           content: `Submission was FAILED! ${error}`,
