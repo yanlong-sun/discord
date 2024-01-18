@@ -22,9 +22,9 @@ const getRow = async (date) => {
   await doc.loadInfo();
   let sheet = doc.sheetsByIndex[0];
   let rows = await sheet.getRows();
-  console.log(date, index, rows[index + 1]);
-  if (index > 0 && rows[index + 1] && rows[index + 1]._rawData[0] === date) {
-    const row = rows[index + 1]._rawData;
+  console.log(date, index, rows[index]);
+  if (index > 0 && rows[index] && rows[index]._rawData[0] === date) {
+    const row = rows[index]._rawData;
     console.log("here is the row", row);
     if (row.length < 3) {
       console.log("<3 result: ", [...row, new Array(3 - row.length).fill("")]);
