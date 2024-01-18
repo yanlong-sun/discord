@@ -13,40 +13,50 @@ const serviceAccountAuth = new JWT({
 
 const doc = new GoogleSpreadsheet(RESPONSES_SHEET_ID, serviceAccountAuth);
 
-const getRow = async (date) => {
+const getRowNumber = (date) => {
   const startDate = new Date("2023-09-19");
   const currDate = new Date(date);
   const timeDiff = currDate.getTime() - startDate.getTime();
-  const index = timeDiff / (1000 * 60 * 60 * 24);
-
-  await doc.loadInfo();
-  let sheet = doc.sheetsByIndex[0];
-  let rows = await sheet.getRows();
-  let res;
-  if (index > 0 && rows[index] && rows[index]._rawData[0] === date) {
-    const row = rows[index]._rawData;
-    if (row.length < 3) {
-      res = [...row, ...new Array(3 - row.length).fill("")];
-    } else {
-      res = row;
-    }
-  } else {
-    res = -1;
-  }
-  return { row: res, index };
+  return timeDiff / (1000 * 60 * 60 * 24);
 };
 
 const getTask = async (date) => {
-  const { row } = await getRow(date);
-  return row;
+  try {
+    await doc.loadInfo();
+    let sheet = doc.sheetsByIndex[0];
+    let rows = await sheet.getRows();
+    const rowNumber = getRowNumber(date);
+    if (rowNumber < 0 || rowNumber > sheet.rowCount) {
+      throw Error("Date exceeds the sheet range, try a different date");
+    }
+    const row = await sheet.getRows(rowNumber);
+    const rowData = row._rawData;
+    if (rowData.length < 3) {
+      return [...rowData, ...new Array(3 - rowData.length).fill("")];
+    } else {
+      return rowData;
+    }
+  } catch (error) {
+    console.error("Error of getting task: ", error.message);
+  }
 };
 
 const addTask = async (date, id, task) => {
-  const { row } = await getRow(date);
-  if (row === -1) {
+  try {
+    await doc.loadInfo();
+    let sheet = doc.sheetsByIndex[0];
+    const rowNumber = getRowNumber(date);
+    if (rowNumber < 0 || rowNumber > sheet.rowCount) {
+      throw Error("Date exceeds the sheet range, try a different date");
+    }
+    const row = await sheet.getRows(rowNumber);
+    row._rawData[id] = task;
+    console.log(row._rawData);
+    await row.save();
     return -1;
+  } catch (error) {
+    console.error("Error of adding task: ", error.message);
   }
-  row._rawData[id] = task;
 };
 
 addTask("2024-01-18", 2, "学习了nodejs");
