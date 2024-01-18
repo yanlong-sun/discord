@@ -14,7 +14,6 @@ const serviceAccountAuth = new JWT({
 const doc = new GoogleSpreadsheet(RESPONSES_SHEET_ID, serviceAccountAuth);
 doc.axios = doc.axios || {};
 doc.axios.defaults = doc.axios.defaults || {};
-doc.axios.defaults.timeout = 30000; // Set timeout to 30 seconds
 const getRow = async (date) => {
   await doc.loadInfo();
   let sheet = doc.sheetsByIndex[0];
