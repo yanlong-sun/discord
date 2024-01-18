@@ -3,6 +3,7 @@ const { getTask, addTask } = require("../util/gsOperation.js");
 
 const isValidDateFormat = (date) => {
   const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
+  console.log(`is Date ${date}, valid? ${dateFormatRegex.test(dateString)}`);
   return dateFormatRegex.test(dateString);
 };
 
