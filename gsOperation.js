@@ -29,7 +29,7 @@ const getTask = async (date) => {
     if (rowNumber < 0 || rowNumber > sheet.rowCount) {
       throw Error("Date exceeds the sheet range, try a different date");
     }
-    const row = await sheet.getRows(rowNumber);
+    const row = rows[rowNumber];
     const rowData = row._rawData;
     if (rowData.length < 3) {
       return [...rowData, ...new Array(3 - rowData.length).fill("")];
@@ -45,12 +45,13 @@ const addTask = async (date, id, task) => {
   try {
     await doc.loadInfo();
     let sheet = doc.sheetsByIndex[0];
+    let rows = await sheet.getRows();
     const rowNumber = getRowNumber(date);
     if (rowNumber < 0 || rowNumber > sheet.rowCount) {
       throw Error("Date exceeds the sheet range, try a different date");
     }
-    console.timeLog(rowNumber);
-    const row = await sheet.getRows(rowNumber);
+    console.log(rowNumber);
+    const row = rows[rowNumber];
     console.log(row);
     row._rawData[id] = task;
     console.log(row._rawData);
