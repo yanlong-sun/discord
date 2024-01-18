@@ -50,11 +50,8 @@ const addTask = async (date, id, task) => {
     if (rowNumber < 0 || rowNumber > sheet.rowCount) {
       throw Error("Date exceeds the sheet range, try a different date");
     }
-    console.log(rowNumber);
     const row = rows[rowNumber];
-    console.log(row);
     row._rawData[id] = task;
-    console.log(row._rawData);
     await row.save();
     return -1;
   } catch (error) {
@@ -62,4 +59,4 @@ const addTask = async (date, id, task) => {
   }
 };
 
-addTask("2024-01-18", 2, "学习了nodejs");
+module.exports = { getTask, addTask };

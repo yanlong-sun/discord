@@ -1,4 +1,5 @@
 const { Events } = require("discord.js");
+const { getTask, addTask } = require("../util/gsOperation.js");
 
 module.exports = {
   name: Events.InteractionCreate,
@@ -7,6 +8,7 @@ module.exports = {
     if (interaction.isModalSubmit() && interaction.customId === "logModal") {
       const user =
         interaction.user.username === "yanlong_sun" ? "Yanlong" : "Jamie";
+      const id = interaction.user.username === "yanlong_sun" ? "2" : "1";
       const date = interaction.fields.getTextInputValue("dateInput");
       const log = interaction.fields.getTextInputValue("logInput");
       if (!Number.isNaN(new Date(date).valueOf())) {
@@ -15,8 +17,8 @@ module.exports = {
         });
         return;
       }
-
       // upload to google sheet
+      await addTask(data, 1, log);
 
       await interaction.reply({
         content: `${user} submitted: \n \n ${date} \n ${log}`,
