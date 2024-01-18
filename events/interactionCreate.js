@@ -32,7 +32,7 @@ module.exports = {
         });
       }
       await interaction.reply({
-        content: `${user} submitted: \n \n ${date} \n ${log}`,
+        content: `**${user}** submitted: \n \n **${date}** \n ${log}`,
       });
     }
     if (interaction.isModalSubmit() && interaction.customId === "tvModal") {
