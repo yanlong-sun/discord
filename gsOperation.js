@@ -22,47 +22,31 @@ const getRow = async (date) => {
   await doc.loadInfo();
   let sheet = doc.sheetsByIndex[0];
   let rows = await sheet.getRows();
-  console.log(date, index);
+  let res;
   if (index > 0 && rows[index] && rows[index]._rawData[0] === date) {
     const row = rows[index]._rawData;
-    console.log("here is the row", row);
     if (row.length < 3) {
-      console.log("<3 result: ", [...row, new Array(3 - row.length).fill("")]);
-      return [...row, new Array(3 - row.length).fill("")];
+      res = [...row, ...new Array(3 - row.length).fill("")];
+    } else {
+      res = row;
     }
-    console.log("==3 result: ", row);
-    return row;
+  } else {
+    res = -1;
   }
-  console.log("bucunzai result", -1);
-  return -1;
+  return { row: res, index };
 };
 
-getRow("2023-10-11");
-getRow("2023-10-15");
-getRow("2023-10-23");
-getRow("2033-10-15");
+const getTask = async (date) => {
+  const { row } = await getRow(date);
+  return row;
+};
 
-// const getTask = async (date) => {};
+const addTask = async (date, id, task) => {
+  const { row } = await getRow(date);
+  if (row === -1) {
+    return -1;
+  }
+  row._rawData[id] = task;
+};
 
-// const addTask = async (date, id) => {
-//   await doc.loadInfo();
-//   let sheet = doc.sheetsByIndex[0];
-
-//   for (let index = 0; index < rows.length; index++) {
-//     const row = rows[index];
-//     await sheet.addRow(row);
-//   }
-// };
-
-// let rows = [
-//   {
-//     email: "email@email.com",
-//     user_name: "ramesh",
-//     password: "abcd@1234",
-//   },
-//   {
-//     email: "email@gmail.com",
-//     user_name: "dilip",
-//     password: "abcd@1234",
-//   },
-// ];
+addTask("2024-01-18", 2, "学习了nodejs");
