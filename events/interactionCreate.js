@@ -39,8 +39,8 @@ module.exports = {
       const keyword = interaction.fields.getTextInputValue("keyword");
       const encodedKeyword = encodeURI(keyword);
       await interaction.reply({
-        content: `xiaobao: https://xiaoxintv.net/index.php/vod/search.html?wd=${encodedKeyword}&submit=  \n
-                  aiyifan: https://www.iyf.tv/search/${encodedKeyword} \n`,
+        content: `https://xiaoxintv.net/index.php/vod/search.html?wd=${encodedKeyword}&submit= 
+                  https://www.iyf.tv/search/${encodedKeyword}`,
       });
       return;
     }
