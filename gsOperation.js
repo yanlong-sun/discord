@@ -15,7 +15,8 @@ const doc = new GoogleSpreadsheet(RESPONSES_SHEET_ID, serviceAccountAuth);
 
 const getRow = async (date) => {
   const startDate = new Date("2023-09-19");
-  const timeDiff = date.getTime() - startDate.getTime();
+  const currDate = new Date(date);
+  const timeDiff = currDate.getTime() - startDate.getTime();
   const index = timeDiff / (1000 * 60 * 60 * 24);
 
   await doc.loadInfo();
