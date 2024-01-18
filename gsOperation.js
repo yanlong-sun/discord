@@ -30,7 +30,7 @@ const getRow = async (date) => {
   }
 };
 
-getRow("Mon, 10 23, 2023");
+getRow("2024-01-17");
 
 // const addRow = async (rows) => {
 //   // use service account creds
