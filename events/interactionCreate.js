@@ -25,13 +25,13 @@ module.exports = {
         return;
       }
       // upload to google sheet
-      try {
-        await addTask(data, id, log);
-      } catch (error) {
-        await interaction.reply({
-          content: `Submission was FAILED! ${error}`,
-        });
-      }
+      // try {
+      //   await addTask(data, id, log);
+      // } catch (error) {
+      //   await interaction.reply({
+      //     content: `Submission was FAILED! ${error}`,
+      //   });
+      // }
       await interaction.reply({
         content: `${user} submitted: \n \n ${date} \n ${log}`,
       });
